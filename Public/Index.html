@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Fabras Auto Watch Lister — V1</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand-block">
+      <span class="brand-tag">FABRAS</span>
+      <h1 class="store-title">Auto Watch Lister <span class="badge-v1">V1</span></h1>
+    </div>
+    <div class="store-links">
+      <a href="https://onlinegoodsbyjatinin.storzu.com/" target="_blank" class="link-btn store-link">Live Store ↗</a>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <section id="storzu-banner" class="status-banner banner-safe">
+      <div class="banner-icon">ℹ️</div>
+      <div class="banner-text">
+        <strong id="banner-title">Storzu Safe Queue Mode Active</strong>
+        <p id="banner-desc">Live direct publishing requires official Storzu API keys. All generated listings are staged locally and ready for CSV/JSON direct batch imports.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Dashboard Overview</h2>
+        <span class="fixed-price-pill">Fixed Price: ₹499 INR</span>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Total Imported</span>
+          <span class="metric-val" id="metric-total">0</span>
+        </div>
+        <div class="metric-card highlight">
+          <span class="metric-label">Ready to Publish</span>
+          <span class="metric-val" id="metric-ready">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Published</span>
+          <span class="metric-val" id="metric-published">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Out of Stock</span>
+          <span class="metric-val" id="metric-stock">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Duplicates Filtered</span>
+          <span class="metric-val" id="metric-dup">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Daily Limit</span>
+          <span class="metric-val" id="metric-limit">100</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="actions-grid">
+        <button class="btn btn-primary" id="btn-import-demo">
+          <span>⚡ Import Demo Feed</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-bulk-publish">
+          <span>📤 Bulk Publish to Storzu</span>
+        </button>
+        <button class="btn btn-outline" id="btn-export-csv">
+          <span>📑 Export Storzu CSV</span>
+        </button>
+        <button class="btn btn-outline" id="btn-export-json">
+          <span>📦 Export JSON</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Product Review Queue</h2>
+        <div class="filter-group">
+          <select id="filter-status" class="select-input">
+            <option value="ALL">All Items</option>
+            <option value="READY" selected>Ready (Staged)</option>
+            <option value="PUBLISHED">Published</option>
+            <option value="OUT_OF_STOCK">Out of Stock</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="product-list" class="product-list">
+      </div>
+    </section>
+
+    <section class="section settings-card">
+      <h2 class="section-title">Storzu Integration & Automation</h2>
+      <p class="section-subtitle">Configure backend credentials and automated daily sync routines.</p>
+
+      <form id="settings-form" class="settings-form">
+        <div class="form-group">
+          <label>Storzu API Base URL (Placeholder)</label>
+          <input type="url" id="cfg-url" placeholder="https://api.storzu.com/v1" class="text-input" />
+          <small class="helper-text">Official Storzu developer endpoint.</small>
+        </div>
+
+        <div class="form-group">
+          <label>Storzu API Key / Token</label>
+          <input type="password" id="cfg-key" placeholder="••••••••••••••••••••••••" class="text-input" />
+          <small class="helper-text">Stored securely on the server side.</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Daily Import Limit</label>
+            <input type="number" id="cfg-limit" value="100" class="text-input" />
+          </div>
+          <div class="form-group half">
+            <label>Daily Sync Schedule</label>
+            <select id="cfg-hour" class="select-input">
+              <option value="1">01:00 AM</option>
+              <option value="3" selected>03:00 AM (Recommended)</option>
+              <option value="6">06:00 AM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="btn-test-conn">Test Storzu Connection</button>
+          <button type="submit" class="btn btn-primary">Save Automation Settings</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <div id="product-modal" class="modal-backdrop hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-heading">Product Details</h3>
+        <button class="close-btn" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
